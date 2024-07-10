@@ -32,14 +32,10 @@ class UserController
       return;
     }
 
-    $response = [
-      'id' => $user->getId(),
-      'username' => $user->getUsername(),
-      'email' => $user->getEmail(),
-    ];
+    $response = json_encode($user);
 
     header('Content-Type: application/json');
-    echo json_encode($response);
+    echo $response;
     return;
   }
 
