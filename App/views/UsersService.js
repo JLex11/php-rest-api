@@ -14,7 +14,6 @@ class UsersService {
         console.error(error)
       })
 
-    console.log("getUsers", response)
     return Array.isArray(response) ? response : [response]
   }
 

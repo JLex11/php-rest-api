@@ -59,13 +59,13 @@ $users = $userDAO->getAllUsers();
     </section>
     <template id="user_card_template">
       <li class="user_card">
-        <article class="flex flex-row gap-3 p-2 border dark:border-gray-300 dark:border-gray-600 border-gray-300 shadow rounded max-w-96 h-fit">
+        <article class="flex flex-row gap-3 p-2 border border-gray-300 dark:border-gray-600 shadow rounded max-w-96 h-fit">
           <img id="__user_image" src="" alt="" height="90" class="rounded aspect-square h-28">
           <div class="flex flex-col gap-0 w-full overflow-hidden gradient-mask-r-80 justify-between">
             <h4 id="__user_name" class="text-lg font-bold"></h4>
             <span id="__user_email" class="opacity-80"></span>
             <span id="__user_password" class="opacity-80"></span>
-            <button type="button" class="flex px-3 py-1 bg-red-700 w-fit h-fit rounded">Eliminar</button>
+            <button type="button" class="flex px-3 py-1 bg-red-700 text-white w-fit h-fit rounded">Eliminar</button>
           </div>
         </article>
       </li>

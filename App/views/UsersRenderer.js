@@ -16,7 +16,7 @@ class UsersRenderer {
             <h4 id="__user_name" class="text-lg font-bold"></h4>
             <span id="__user_email" class="opacity-80"></span>
             <span id="__user_password" class="opacity-80"></span>
-            <button type="button" id="__user-card-remove" class="flex px-3 py-1 bg-red-700 w-fit h-fit rounded">Eliminar</button>
+            <button type="button" id="__user-card-remove" class="flex px-3 py-1 bg-red-700 text-white w-fit h-fit rounded">Eliminar</button>
           </div>
         </article>
       </li>
@@ -67,9 +67,7 @@ class UsersRenderer {
   }
 
   renderUsers(users) {
-    const renderedUsers = (users || this.users)
-      .map((user) => this.renderUser(user))
-      .join("")
+    const renderedUsers = users.map((user) => this.renderUser(user)).join("")
 
     document.startViewTransition(() => {
       this.$container.innerHTML = renderedUsers
@@ -91,11 +89,13 @@ class UsersRenderer {
   }
 
   async addUsers(users) {
-    console.log(users)
     const newUsers = await Promise.all(
       users.map((user) => this.mapRandomUserImage(user))
     )
     this.users.push(...newUsers)
-    this.renderUsers()
+    const uniqueUsers = newUsers.filter(
+      (user) => !this.users.find((u) => u.id == user.id)
+    )
+    this.renderUsers([...uniqueUsers, ...this.users])
   }
 }
