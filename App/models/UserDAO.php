@@ -31,7 +31,7 @@ class UserDAO
       return null;
     }
 
-    return new User($user['id'], $user['username'], $user['email'], $user['password']);
+    return (new User($user['id'], $user['username'], $user['email'], $user['password']))->toAssocArray();
   }
 
   public function getAllUsers()
