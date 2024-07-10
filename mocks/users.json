@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "username": "juan_perez",
+      "email": "juan.perez@email.com",
+      "contrasena": "P3r3z2023!"
+    },
+    {
+      "username": "maria_lopez",
+      "email": "marialopez85@mail.com",
+      "contrasena": "L0p3zM@ria"
+    },
+    {
+      "username": "carlos_87",
+      "email": "carlos87@correo.net",
+      "contrasena": "C@rlos1987"
+    },
+    {
+      "username": "ana_rodriguez",
+      "email": "ana.rodriguez@empresa.com",
+      "contrasena": "R0driguez#Ana"
+    },
+    {
+      "username": "miguel_sanchez",
+      "email": "miguels@ejemplo.org",
+      "contrasena": "S@nchez2024"
+    }
+  ]
+}
