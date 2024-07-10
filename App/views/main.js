@@ -27,7 +27,6 @@ async function handleFormSubmit(event) {
       console.error(error)
     })
 
-  console.log("added user", user)
   usersRenderer.addUsers([user])
   form.reset()
 }

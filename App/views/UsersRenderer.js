@@ -1,3 +1,5 @@
+let usersState = []
+
 class UsersRenderer {
   constructor({ $container, onRemove }) {
     this.$container = $container
@@ -24,7 +26,8 @@ class UsersRenderer {
   }
 
   removeUser(userId) {
-    const newUsers = this.users.filter((user) => user.id != userId)
+    const newUsers = usersState.filter((user) => user.id != userId)
+    usersState = newUsers
     return newUsers
   }
 
@@ -67,7 +70,9 @@ class UsersRenderer {
   }
 
   renderUsers(users) {
-    const renderedUsers = users.map((user) => this.renderUser(user)).join("")
+    const renderedUsers = usersState
+      .map((user) => this.renderUser(user))
+      .join("")
 
     document.startViewTransition(() => {
       this.$container.innerHTML = renderedUsers
@@ -92,10 +97,8 @@ class UsersRenderer {
     const newUsers = await Promise.all(
       users.map((user) => this.mapRandomUserImage(user))
     )
-    this.users.push(...newUsers)
-    const uniqueUsers = newUsers.filter(
-      (user) => !this.users.find((u) => u.id == user.id)
-    )
-    this.renderUsers([...uniqueUsers, ...this.users])
+
+    usersState = [...usersState, ...newUsers]
+    this.renderUsers(usersState)
   }
 }
