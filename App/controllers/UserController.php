@@ -27,7 +27,7 @@ class UserController
     }
 
     if (!$user) {
-      http_response_code(404);
+      http_response_code(204);
       echo json_encode(['error' => 'User not found']);
       return;
     }
