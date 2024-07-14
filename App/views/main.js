@@ -3,9 +3,11 @@ const baseAPI = window.API_URL
 
 const usersService = new UsersService(baseAPI)
 
+const $template = document.querySelector('template#user_card_template').content.cloneNode(true)
 const usersRenderer = new UsersRenderer({
-  $container: document.querySelector("#users_list"),
-  onRemove: (userId) => usersService.removeUser(userId),
+  $container: document.querySelector('#users_list'),
+  $template,
+  onRemove: (userId) => usersService.removeUser(userId)
 })
 
 function addInitialUsers() {
@@ -21,7 +23,7 @@ async function handleFormSubmit(event) {
     .addNewUser({
       username: username.value,
       email: email.value,
-      password: password.value,
+      password: password.value
     })
     .catch((error) => {
       console.error(error)
@@ -34,8 +36,8 @@ async function handleFormSubmit(event) {
 function main() {
   addInitialUsers()
 
-  const $form = document.querySelector("form")
-  $form.addEventListener("submit", handleFormSubmit)
+  const $form = document.querySelector('form')
+  $form.addEventListener('submit', handleFormSubmit)
 }
 
 main()
