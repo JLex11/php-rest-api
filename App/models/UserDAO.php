@@ -17,39 +17,54 @@ class UserDAO
 
   public function getUserById($id)
   {
-    $query = "SELECT id, username, email, password FROM users WHERE id = :id";
+    $query = 'SELECT id, username, email, password FROM users WHERE id = :id';
     $stmt = $this->db->prepare($query);
 
     try {
       $stmt->execute([':id' => $id]);
     } catch (PDOException $e) {
-      throw new Exception("Error getting user " . $e->getMessage());
+      throw new Exception('Error getting user ' . $e->getMessage());
     }
 
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$user) {
+    $fetchedUser = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$fetchedUser) {
       return null;
     }
 
-    return (new User($user['id'], $user['username'], $user['email'], $user['password']))->toAssocArray();
+    $user = new User($fetchedUser['id'], $fetchedUser['username'], $fetchedUser['email'], $fetchedUser['password']);
+    return $user->toAssocArray();
+  }
+
+  public function checkIfUserExist($id)
+  {
+    $query = 'SELECT id, username, email, password FROM users WHERE id = :id';
+    $stmt = $this->db->prepare($query);
+
+    try {
+      $stmt->execute([':id' => $id]);
+    } catch (PDOException $e) {
+      throw new Exception('Error getting user ' . $e->getMessage());
+    }
+
+    $fetchedUser = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $fetchedUser ? true : false;
   }
 
   public function getAllUsers()
   {
-    $query = "SELECT id, username, email, password FROM users";
+    $query = 'SELECT id, username, email, password FROM users';
     $stmt = $this->db->prepare($query);
 
     try {
       $stmt->execute();
     } catch (PDOException $e) {
-      throw new Exception("Error getting users " . $e->getMessage());
+      throw new Exception('Error getting users ' . $e->getMessage());
     }
 
     $users = [];
     $fetchedUsers = $stmt->fetchAll();
     foreach ($fetchedUsers as $fetchedUser) {
-      $user =
-        new User($fetchedUser['id'], $fetchedUser['username'], $fetchedUser['email'], $fetchedUser['password']);
+      $user = new User($fetchedUser['id'], $fetchedUser['username'], $fetchedUser['email'], $fetchedUser['password']);
       $users[] = $user->toAssocArray();
     }
 
@@ -58,19 +73,19 @@ class UserDAO
 
   public function insertUser($username, $email, $password)
   {
-    if (!isset($username) || $username === "") {
-      throw new Exception("username invalid");
+    if (!isset($username) || $username === '') {
+      throw new Exception('username invalid');
     }
 
-    if (!isset($email) || $email === "") {
-      throw new Exception("email invalid");
+    if (!isset($email) || $email === '') {
+      throw new Exception('email invalid');
     }
 
-    if (!isset($password) || $password === "") {
-      throw new Exception("password invalid");
+    if (!isset($password) || $password === '') {
+      throw new Exception('password invalid');
     }
 
-    $query = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
+    $query = 'INSERT INTO users (username, email, password) VALUES (:username, :email, :password)';
     $stmt = $this->db->prepare($query);
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -79,10 +94,10 @@ class UserDAO
       $stmt->execute([
         ':username' => $username,
         ':email' => $email,
-        ':password' => $hashedPassword
+        ':password' => $hashedPassword,
       ]);
     } catch (PDOException $e) {
-      throw new Exception("Error inserting user " . $e->getMessage());
+      throw new Exception('Error inserting user ' . $e->getMessage());
     }
 
     $id = $this->db->lastInsertId('users_id_seq');
@@ -95,15 +110,19 @@ class UserDAO
 
   public function deleteUser($id)
   {
-    $query = "DELETE FROM users WHERE id = :id";
+    if (!$this->checkIfUserExist($id)) {
+      return false;
+    }
+
+    $query = 'DELETE FROM users WHERE id = :id';
     $stmt = $this->db->prepare($query);
 
     try {
       $stmt->execute([':id' => $id]);
     } catch (PDOException $e) {
-      throw new Exception("Error deleting user " . $e->getMessage());
+      throw new Exception('Error deleting user ' . $e->getMessage());
     }
 
-    return;
+    return true;
   }
 }
