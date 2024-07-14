@@ -14,10 +14,10 @@ $users = $userDAO->getAllUsers();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Users App</title>
-  <link rel="stylesheet" href="<?php echo BASE_URL . "/dist/style.css" ?>">
+  <link rel="stylesheet" href="dist/style.css">
   <script>
     window.INITIAL_USERS = <?php echo json_encode($users); ?>;
-    window.API_URL = "<?php echo BASE_URL . "/api"; ?>"
+    window.API_URL = "api"
   </script>
 </head>
 
@@ -32,7 +32,7 @@ $users = $userDAO->getAllUsers();
 
       <hr class="bg-gray-600 border border-gray-300 dark:border-gray-600">
 
-      <form action="<?php echo BASE_URL . "/api/users"; ?>" method="post" class="flex flex-col gap-3 md:sticky top-8">
+      <form action="<?php echo BASE_URL . '/api/users'; ?>" method="post" class="flex flex-col gap-3 md:sticky top-8">
         <label class="flex gap-1 flex-col">
           <span>Nombre de usuario</span>
           <input type="text" name="username" placeholder="Ingresa el nombre de usuario" class="rounded py-2 px-4 bg-white/10 border border-gray-300 dark:border-gray-600">
@@ -54,27 +54,27 @@ $users = $userDAO->getAllUsers();
       </form>
     </section>
     <section class="w-full">
-      <ul id="users_list" class="grid grid-cols-[repeat(auto-fill,_minmax(300px,1fr))] gap-2">
+      <ul id="users_list" class="grid grid-cols-[repeat(auto-fill,_minmax(300px,1fr))] gap-4">
       </ul>
     </section>
     <template id="user_card_template">
       <li class="user_card">
-        <article class="flex flex-row gap-3 p-2 border border-gray-300 dark:border-gray-600 shadow rounded max-w-96 h-fit">
+        <article class="flex flex-row gap-3 p-2 border transition-all dark:border-gray-600 border-gray-300 shadow rounded h-fit hover:shadow-lg hover:border-blue-500">
           <img id="__user_image" src="" alt="" height="90" class="rounded aspect-square h-28">
           <div class="flex flex-col gap-0 w-full overflow-hidden gradient-mask-r-80 justify-between">
             <h4 id="__user_name" class="text-lg font-bold"></h4>
             <span id="__user_email" class="opacity-80"></span>
             <span id="__user_password" class="opacity-80"></span>
-            <button type="button" class="flex px-3 py-1 bg-red-700 text-white w-fit h-fit rounded">Eliminar</button>
+            <button type="button" id="__user-card-remove" class="flex px-3 py-1 bg-red-600 text-white w-fit h-fit rounded">Eliminar</button>
           </div>
         </article>
       </li>
     </template>
   </main>
 
-  <script src="<?php echo BASE_URL . "/app/views/UsersRenderer.js" ?>" type="text/javascript"></script>
-  <script src="<?php echo BASE_URL . "/app/views/UsersService.js" ?>" type="text/javascript"></script>
-  <script src="<?php echo BASE_URL . "/app/views/main.js" ?>" type="text/javascript"></script>
+  <script src="app/views/UsersRenderer.js" type="text/javascript"></script>
+  <script src="app/views/UsersService.js" type="text/javascript"></script>
+  <script src="app/views/main.js" type="text/javascript"></script>
 </body>
 
 </html>
