@@ -11,32 +11,32 @@ $relativeURI = str_replace(BASE_URL, '', $requestURI);
 
 if ($relativeURI === '/' || $relativeURI === '/index.php') {
   require_once './App/views/home.php';
-  exit;
+  exit();
 }
 
 if ($relativeURI === '/api/users') {
   $controller = new UserController();
 
-  if ($requestMethod === "POST") {
+  if ($requestMethod === 'POST') {
     $controller->createUser();
-    exit;
+    exit();
   }
 
   $controller->getAllUsers();
-  exit;
+  exit();
 }
 
 if (preg_match('/^\/api\/users\/(\d+)$/', $relativeURI, $matches)) {
   $userId = $matches[1];
   $controller = new UserController();
 
-  if ($requestMethod === "DELETE") {
+  if ($requestMethod === 'DELETE') {
     $controller->deleteUser($userId);
-    exit;
+    exit();
   }
 
   $controller->getUser($userId);
-  exit;
+  exit();
 }
 
 http_response_code(404);
